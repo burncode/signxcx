@@ -1,0 +1,97 @@
+<style lang="less">
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userinfo-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+    color: #aaa;
+  }
+</style>
+<template>
+  <view >
+
+<van-tabs active="{{ active }}" bind:change="onChange">
+  <van-tab title="今日排行">
+    
+    <van-cell-group>
+  <van-cell title="单元格" value="内容" />
+  <van-cell title="单元格" value="内容" label="描述信息" border="{{ false }}" />
+</van-cell-group>
+
+  </van-tab>
+  <van-tab title="总榜">
+    <van-cell-group>
+  <van-cell value="内容" border="{{ false }}" />
+</van-cell-group>
+
+
+  </van-tab>
+  <van-tab title="所有">
+    
+    <van-cell-group>
+      <van-cell title="单元格" icon="location" border="{{ false }}" />
+    </van-cell-group>
+  </van-tab>
+</van-tabs>
+  
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import testMixin from '../mixins/test'
+
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'test',
+      "usingComponents": {
+        "van-tab": "/components/van/tab/index",
+        "van-tabs": "/components/van/tabs/index",
+        "van-cell": "/components/van/cell/index",
+        "van-cell-group": "/components/van/cell-group/index",
+        "van-panel": "/components/van/panel/index"
+      }
+    }
+    components = {
+    }
+
+    mixins = [testMixin]
+
+    data = {
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+      onChange(event) {
+        wepy.showToast({
+          title: `切换到标签 ${event.detail.index + 1}`,
+          icon: 'none'
+        });
+      }
+    }
+
+    events = {
+      'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+
+    onLoad() {
+    }
+  }
+</script>
