@@ -17,22 +17,31 @@
 </style>
 <template>
   <view >
-      <view class="cards">
-        <view class="card">
-            <view class="head">
-              <image class="card-img-top" wx:if="{{ card.cover }}" src="{{card.cover}}" mode="widthFix" />
-            </view>
-            <view>
-              <view>
-                张三
-              </view>
-              <view>
-                坚持签到30天
-              </view>
-            </view>
-        </view>
-      </view>
-      <!-- <Login /> -->
+
+<van-tabs active="{{ active }}" bind:change="onChange">
+  <van-tab title="今日排行">
+    
+    <van-cell-group>
+  <van-cell title="单元格" value="内容" />
+  <van-cell title="单元格" value="内容" label="描述信息" border="{{ false }}" />
+</van-cell-group>
+
+  </van-tab>
+  <van-tab title="总榜">
+    <van-cell-group>
+  <van-cell value="内容" border="{{ false }}" />
+</van-cell-group>
+
+
+  </van-tab>
+  <van-tab title="所有">
+    
+    <van-cell-group>
+      <van-cell title="单元格" icon="location" border="{{ false }}" />
+    </van-cell-group>
+  </van-tab>
+</van-tabs>
+  
   </view>
 </template>
 
@@ -40,15 +49,21 @@
   import wepy from 'wepy'
   import testMixin from '../mixins/test'
   import userApi from '../api/user'
-  import Login from '../components/login'
 
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: 'test',
+      "usingComponents": {
+        "van-tab": "/components/van/tab/index",
+        "van-tabs": "/components/van/tabs/index",
+        "van-cell": "/components/van/cell/index",
+        "van-cell-group": "/components/van/cell-group/index",
+        "van-panel": "/components/van/panel/index"
+      }
     }
     components = {
-      Login
     }
+
     mixins = [testMixin]
 
     data = {

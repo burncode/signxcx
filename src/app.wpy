@@ -13,15 +13,41 @@
 import wepy from 'wepy'
 import 'wepy-async-function'
 
-
-
 export default class extends wepy.app {
   config = {
     pages: [
+      'pages/index',
       'pages/index1',
       'pages/index2',
-      'pages/index'
+      'pages/user'
     ],
+    
+      "tabBar": {
+        "color": "#7A7E83",
+        "selectedColor": "#1aad19",
+        "borderStyle": "black",
+        "backgroundColor": "#ffffff",
+        "list": [
+            {
+            "pagePath": 'pages/index',
+            "iconPath": "images/explore.png",
+            "selectedIconPath": "images/explore_HL.png",
+            "text": "今日"
+            },
+            {
+            "pagePath": 'pages/index1',
+            "iconPath": "images/ranking.png",
+            "selectedIconPath": "images/ranking_HL.png",
+            "text": "排行"
+            },
+            {
+            "pagePath": 'pages/user',
+            "iconPath": "images/user.png",
+            "selectedIconPath": "images/user_HL.png",
+            "text": "我的"
+            }
+        ]
+      },
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
@@ -29,20 +55,37 @@ export default class extends wepy.app {
       navigationBarTextStyle: 'black'
     }
   }
-
-  globalData = {
-    userInfo: null
-  }
-
   constructor () {
     super()
     this.use('requestfix')
-    // this.use('promisify');
+    this.use('promisify')
+    this.intercept('request', {
+      config (p) {
+        p.header = this.createAuthHeader()
+        return p
+      }
+    })
+  }
+  createAuthHeader () {
+    const token = wepy.$instance.globalData.token
+    const header = {}
+    if (token) {
+      header['Authorization'] = 'Bearer ' + token
+    }
+    return header
   }
 
-  onLaunch() {
-    // this.testAsync()
+  globalData = {
+    token: '',
+    baseUrl: 'http://localhost:8009',
+    userInfo: null
   }
-
+  
+  async onLaunch (p) {
+    // const {code} = await wepy.login()
+    // const {data} = await wepy.request({ url: 'http://localhost:8009/gettoken', data: { code: code } })
+    // wepy.$instance.globalData.token = data.token
+    // console.log('onLaunch token', wepy.$instance.globalData.token)
+  }
 }
 </script>

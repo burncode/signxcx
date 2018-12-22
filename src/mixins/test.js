@@ -13,14 +13,17 @@ export default class testMixin extends wepy.mixin {
 
   onShow() {
     console.log('mixin onShow')
+    console.log('xx onShow', wepy.$instance.globalData.token)
   }
 
   onRoute() {
-    var page = getCurrentPages();
+    var page = getCurrentPages()
     console.log('mixin onRoute', wepy, page[0].route, page[0].options)
+    console.log('xx onRoute', wepy.$instance.globalData.token)
   }
 
   onLoad() {
     console.log('mixin onLoad')
+    console.log('xx onLoad', wepy.$instance.globalData.token)
   }
 }
