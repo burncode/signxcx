@@ -20,6 +20,7 @@ export default class extends wepy.app {
       'pages/index',
       'pages/index1',
       'pages/index2',
+      'pages/info',
       'pages/user'
     ],
     

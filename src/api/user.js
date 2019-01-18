@@ -69,4 +69,9 @@ export default class user extends base {
     return await this.get(url)
   }
 
+  static async getUser(id) {
+    const url = `${this.baseUrl}/api/user/${id}`
+    return await this.get(url)
+  }
+
 }
