@@ -16,15 +16,15 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/canvas',
       'pages/index',
+      'pages/canvas',
       'pages/index1',
       'pages/index2',
       'pages/info',
       'pages/user'
     ],
     
-      "tabBar": {
+      "tabBarx": {
         "color": "#7A7E83",
         "selectedColor": "#1aad19",
         "borderStyle": "black",

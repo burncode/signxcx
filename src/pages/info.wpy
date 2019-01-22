@@ -4,7 +4,7 @@
 }
 .head{
     display: flex;
-    padding: 64rpx;
+    padding: 64rpx 32rpx;
     -webkit-box-align: center;
     -webkit-align-items: center;
     align-items: center;
@@ -12,7 +12,7 @@
 }
 .hd{
     width:128rpx ;
-    margin-right: 64rpx;
+    margin-right: 32rpx;
 }
 .bd{
     flex: 1;
@@ -96,10 +96,9 @@
         </view>
         <view class="bd">
             <view class="title"> {{userInfo.nickName}} </view>
-            <view class="desc"> 律值：12346  签到：20天</view>
+            <view class="desc"> 已签到：20天  律值：12346  </view>
         </view>
     </view>
-
 
     <view class="panel">
         <view class="panel__hd">关注过Ta的</view>
