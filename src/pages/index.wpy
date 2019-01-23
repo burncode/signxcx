@@ -139,7 +139,7 @@ button {
     border-radius: 50%;
     width: 60rpx;
     height: 60rpx;
-    display:initial;
+    display:inherit;
 }
 .flexbox{
     display: flex;
@@ -235,8 +235,8 @@ background-color:white;
         <view class="sign">
             <view class="flexbox">
                 <view>
-                    <image class="icon"  wx:if="userInfo.avatarUrl" src="{{userInfo.avatarUrl}}"></image>
-                    <image class="icon"  wx:if="!userInfo.avatarUrl" src=""></image>
+                    <image class="icon"  wx:if="{{userInfo.avatarUrl}}" src="{{userInfo.avatarUrl}}"></image>
+                    <image class="icon"  wx:if="{{!userInfo.avatarUrl}}" src=""></image>
                 </view>
                 <view class="flexitem">
                     <button class="btn" wx:if="{{!userInfo}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
