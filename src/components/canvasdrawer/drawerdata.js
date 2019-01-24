@@ -1,11 +1,11 @@
 export default {
   'width': 375,
-  'height': 555,
+  'height': 360,
   'clear': true,
   'views': [
     {
       'type': 'image',
-      'url': 'https://hybrid.xiaoying.tv/miniprogram/viva-ad/1/1531103986231.jpeg',
+      'url': 'http://localhost:8009/bg.jpg',
       'top': 0,
       'left': 0,
       'width': 375,
@@ -14,7 +14,7 @@ export default {
     {
       'type': 'image',
       'url': 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83epJEPdPqQVgv6D8bojGT4DrGXuEC4Oe0GXs5sMsN4GGpCegTUsBgL9SPJkN9UqC1s0iakjQpwd4h4A/132',
-      'top': 27.5,
+      'top': 127.5,
       'left': 29,
       'width': 55,
       'height': 55
@@ -22,84 +22,92 @@ export default {
     {
       'type': 'image',
       'url': 'https://hybrid.xiaoying.tv/miniprogram/viva-ad/1/1531401349117.jpeg',
-      'top': 27.5,
+      'top': 127.5,
       'left': 29,
       'width': 55,
       'height': 55
     },
     {
       'type': 'text',
-      'content': '您的好友【simmzl】',
-      'fontSize': 16,
+      'content': '07:08',
+      'fontSize': 26,
       'color': '#402D16',
       'textAlign': 'left',
-      'top': 33,
+      'top': 128,
       'left': 96,
       'bolder': true
     },
     {
       'type': 'text',
-      'content': 'https://github.com/simmzl',
-      'fontSize': 15,
-      'color': '#563D20',
+      'content': '坚持自律',
+      'fontSize': 16,
+      'color': '#402D16',
       'textAlign': 'left',
-      'top': 59.5,
-      'left': 96
+      'top': 138,
+      'left': 176,
+      'bolder': false
     },
+    {
+      'type': 'text',
+      'content': '13',
+      'fontSize': 26,
+      'color': 'red',
+      'textAlign': 'center',
+      'top': 128,
+      'left': 270,
+      'bolder': true
+    },
+    {
+      'type': 'text',
+      'content': '天',
+      'fontSize': 16,
+      'color': '#402D16',
+      'textAlign': 'left',
+      'top': 138,
+      'left': 302,
+      'bolder': false
+    },
+    {
+      'type': 'text',
+      'content': '541234人正在参与',
+      'fontSize': 14,
+      'color': '#383549',
+      'textAlign': 'left',
+      'top': 168,
+      'left': 96,
+      'bolder': false
+    },
+   
     {
       'type': 'image',
       'url': 'https://hybrid.xiaoying.tv/miniprogram/viva-ad/1/1531385433625.jpeg',
-      'top': 443,
-      'left': 85,
+      'top': 250,
+      'left': 265,
       'width': 68,
       'height': 68
     },
     {
       'type': 'text',
-      'content': '正品MAC魅可口红礼盒生日唇膏小辣椒Chili西柚情人',
-      'fontSize': 16,
-      'lineHeight': 21,
-      'color': '#383549',
-      'textAlign': 'left',
-      'top': 336,
-      'left': 44,
-      'width': 287,
-      'MaxLineNumber': 2,
-      'breakWord': true,
-      'bolder': true
-    },
-    {
-      'type': 'text',
-      'content': '￥0.00',
-      'fontSize': 19,
-      'color': '#E62004',
-      'textAlign': 'left',
-      'top': 387,
-      'left': 44.5,
-      'bolder': true
-    },
-    {
-      'type': 'text',
-      'content': '原价:￥138.00',
-      'fontSize': 13,
-      'color': '#7E7E8B',
-      'textAlign': 'left',
-      'top': 391,
-      'left': 110,
-      'textDecoration': 'line-through'
-    },
-    {
-      'type': 'text',
-      'content': '长按识别图中二维码帮我砍个价呗~',
+      'content': '扫码一起改变',
       'fontSize': 14,
       'color': '#383549',
       'textAlign': 'left',
-      'top': 460,
-      'left': 165.5,
-      'lineHeight': 20,
-      'MaxLineNumber': 2,
-      'breakWord': true,
-      'width': 125
-    }
+      'top': 320,
+      'left': 255,
+      'bolder': false
+     },
+    // {
+    //   'type': 'text',
+    //   'content': '扫码与我一起改变',
+    //   'fontSize': 14,
+    //   'color': '#383549',
+    //   'textAlign': 'left',
+    //   'top': 320,
+    //   'left': 165.5,
+    //   'lineHeight': 20,
+    //   'MaxLineNumber': 2,
+    //   'breakWord': true,
+    //   'width': 96
+    // }
   ]
 }

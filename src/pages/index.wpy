@@ -1,6 +1,6 @@
 <style lang="less">
 .page{
-    background-color: #f8f8f8;
+    padding-bottom: 100rpx;
 }
 .head{
     display: flex;
@@ -106,8 +106,8 @@
 
 .share-image {
     display: block;
-    width: 600rpx;
-    height: 888rpx;
+    width: 630rpx;
+    height: 540rpx;
     margin: 40rpx auto;
     // border: 1px solid black;
 }
@@ -253,41 +253,19 @@ background-color:white;
         <view class="panel__hd">今日已签到</view>
         <view class="panel__bd">
             <view class="cells">
-                <view class="cell">
-                    <view class="cell__hd">
-                        <image src="{{userInfo.avatarUrl}}" style="width: 90rpx;height: 90rpx;" />
+                <repeat for="{{users}}" key="index" index="index" item="user">
+                
+                    <view class="cell">
+                        <view class="cell__hd">
+                            <image src="{{user.AvatarURL}}" style="width: 90rpx;height: 90rpx;" />
+                        </view>
+                        <view class="cell__bd">
+                            <view>{{user.NickName}}</view>
+                        </view>
                     </view>
-                    <view class="cell__bd">
-                        <view>小易同学</view>
-                    </view>
-                </view>
 
-                <view class="cell">
-                    <view class="cell__hd">
-                        <image src="{{userInfo.avatarUrl}}" style="width: 90rpx;height: 90rpx;" />
-                    </view>
-                    <view class="cell__bd">
-                        <view>小易同学</view>
-                    </view>
-                </view>
+                </repeat>
 
-                <view class="cell">
-                    <view class="cell__hd">
-                        <image src="{{userInfo.avatarUrl}}" style="width: 90rpx;height: 90rpx;" />
-                    </view>
-                    <view class="cell__bd">
-                        <view>小易同学</view>
-                    </view>
-                </view>
-
-                <view class="cell">
-                    <view class="cell__hd">
-                        <image src="{{userInfo.avatarUrl}}" style="width: 90rpx;height: 90rpx;" />
-                    </view>
-                    <view class="cell__bd">
-                        <view>小易同学</view>
-                    </view>
-                </view>
 
             </view>
         </view>
@@ -324,8 +302,8 @@ background-color:white;
   import wepy from 'wepy'
   import userApi from '../api/user'
   import commApi from '../api/comm'
-import canvasdrawer from "../components/canvasdrawer/canvasdrawer";
-import DrawerData from "../components/canvasdrawer/drawerdata";
+  import canvasdrawer from "../components/canvasdrawer/canvasdrawer";
+  import DrawerData from "../components/canvasdrawer/drawerdata";
 
   export default class Index extends wepy.page {
     config = {
@@ -355,11 +333,13 @@ import DrawerData from "../components/canvasdrawer/drawerdata";
 
     methods = {
         click(){},
+
         buildPoster() {
             wepy.showLoading({
                 title: "绘制分享图片中",
                 mask: true
             });
+            console.log('painting',DrawerData)
             this.painting = DrawerData;
             this.showposter = true;
             this.$apply();
@@ -392,12 +372,14 @@ import DrawerData from "../components/canvasdrawer/drawerdata";
         },
 
         async doSign() {
+            this.users = [{NickName:this.userInfo.nickName,AvatarURL:this.userInfo.avatarUrl}, ...this.users]
             let status = await userApi.DoSign()
             if(status ==`t`){
                 this.signInfo.status = false
-            }else{
 
-            }
+            }else{ 
+                this.users = [{NickName:this.userInfo.nickName,AvatarURL:this.userInfo.avatarUrl}, ...this.users]
+            }        
             this.$apply()
         },
         async bindGetUserInfo(e) {
@@ -408,6 +390,150 @@ import DrawerData from "../components/canvasdrawer/drawerdata";
     }
     
     async onLoad() {
+
+         wepy.showLoading({
+                title: "绘制分享图片中",
+                mask: true
+            });
+            console.log('painting',DrawerData)
+            // this.painting = DrawerData;
+            this.painting = {
+  'width': 375,
+  'height': 360,
+  'clear': true,
+  'views': [
+    {
+      'type': 'image',
+      'url': 'http://localhost:8009/bg.jpg',
+      'top': 0,
+      'left': 0,
+      'width': 375,
+      'height': 360
+    },
+    {
+      'type': 'image',
+      'url': 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83epJEPdPqQVgv6D8bojGT4DrGXuEC4Oe0GXs5sMsN4GGpCegTUsBgL9SPJkN9UqC1s0iakjQpwd4h4A/132',
+      'top': 127.5,
+      'left': 29,
+      'width': 55,
+      'height': 55
+    },
+    {
+      'type': 'image',
+      'url': 'https://hybrid.xiaoying.tv/miniprogram/viva-ad/1/1531401349117.jpeg',
+      'top': 127.5,
+      'left': 29,
+      'width': 55,
+      'height': 55
+    }, 
+    {
+      'type': 'text',
+      'content': '一月',
+      'fontSize': 14,
+      'color': '#402D16',
+      'textAlign': 'left',
+      'top': 0,
+      'left': 320,
+      'bolder': false
+    },
+    {
+      'type': 'text',
+      'content': '24',
+      'fontSize': 22,
+      'color': '#402D16',
+      'textAlign': 'left',
+      'top': 18,
+      'left': 320,
+      'bolder': true
+    },
+    {
+      'type': 'text',
+      'content': '07:08',
+      'fontSize': 26,
+      'color': '#402D16',
+      'textAlign': 'left',
+      'top': 128,
+      'left': 96,
+      'bolder': true
+    },
+    {
+      'type': 'text',
+      'content': '坚持自律',
+      'fontSize': 16,
+      'color': '#402D16',
+      'textAlign': 'left',
+      'top': 138,
+      'left': 176,
+      'bolder': false
+    },
+    {
+      'type': 'text',
+      'content': '13',
+      'fontSize': 26,
+      'color': 'red',
+      'textAlign': 'center',
+      'top': 128,
+      'left': 270,
+      'bolder': true
+    },
+    {
+      'type': 'text',
+      'content': '天',
+      'fontSize': 16,
+      'color': '#402D16',
+      'textAlign': 'left',
+      'top': 138,
+      'left': 302,
+      'bolder': false
+    },
+    {
+      'type': 'text',
+      'content': '541234人正在参与',
+      'fontSize': 14,
+      'color': '#383549',
+      'textAlign': 'left',
+      'top': 168,
+      'left': 96,
+      'bolder': false
+    },
+   
+    {
+      'type': 'image',
+      'url': 'https://hybrid.xiaoying.tv/miniprogram/viva-ad/1/1531385433625.jpeg',
+      'top': 250,
+      'left': 265,
+      'width': 68,
+      'height': 68
+    },
+    {
+      'type': 'text',
+      'content': '扫码一起改变',
+      'fontSize': 14,
+      'color': '#383549',
+      'textAlign': 'left',
+      'top': 320,
+      'left': 255,
+      'bolder': false
+     },
+    // {
+    //   'type': 'text',
+    //   'content': '扫码与我一起改变',
+    //   'fontSize': 14,
+    //   'color': '#383549',
+    //   'textAlign': 'left',
+    //   'top': 320,
+    //   'left': 165.5,
+    //   'lineHeight': 20,
+    //   'MaxLineNumber': 2,
+    //   'breakWord': true,
+    //   'width': 96
+    // }
+  ]
+}
+;
+            this.showposter = true;
+            this.$apply();
+
         this.users = await commApi.GetTodaySignUsers()
         this.userInfo = await userApi.getUserInfo()
         this.signInfo = await userApi.GetTodaySignInfo()
