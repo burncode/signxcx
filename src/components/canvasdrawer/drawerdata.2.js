@@ -9,7 +9,7 @@ export default {
       'top': 0,
       'left': 0,
       'width': 375,
-      'height': 360
+      'height': 555
     },
     {
       'type': 'image',
@@ -45,6 +45,14 @@ export default {
       'textAlign': 'left',
       'top': 59.5,
       'left': 96
+    },
+    {
+      'type': 'image',
+      'url': 'https://hybrid.xiaoying.tv/miniprogram/viva-ad/1/1531385366950.jpeg',
+      'top': 136,
+      'left': 42.5,
+      'width': 290,
+      'height': 186
     },
     {
       'type': 'image',

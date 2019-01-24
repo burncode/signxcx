@@ -323,6 +323,7 @@ background-color:white;
 <script>
   import wepy from 'wepy'
   import userApi from '../api/user'
+  import commApi from '../api/comm'
 import canvasdrawer from "../components/canvasdrawer/canvasdrawer";
 import DrawerData from "../components/canvasdrawer/drawerdata";
 
@@ -343,6 +344,7 @@ import DrawerData from "../components/canvasdrawer/drawerdata";
         shareImage: "",
         painting: null,
         showposter: false,
+        users: [],
     }
 
     computed = {
@@ -406,9 +408,9 @@ import DrawerData from "../components/canvasdrawer/drawerdata";
     }
     
     async onLoad() {
+        this.users = await commApi.GetTodaySignUsers()
         this.userInfo = await userApi.getUserInfo()
         this.signInfo = await userApi.GetTodaySignInfo()
-        console.log('userInfo', this.userInfo,this.signInfo, this.signInfo.score)
         this.$apply()
     }
   }

@@ -12,4 +12,9 @@ export default class comm extends base {
     return await this.get(url)
   }
 
+  static async GetTodaySignUsers() {
+    const url = `${this.baseUrl}/gettodaysignusers`
+    return await this.get(url)
+  }
+
 }
