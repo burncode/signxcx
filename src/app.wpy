@@ -79,7 +79,8 @@ export default class extends wepy.app {
 
   globalData = {
     token: '',
-    baseUrl: 'http://localhost:8009',
+    // baseUrl: 'http://localhost:8009',
+    baseUrl: 'https://signapi.readfollow.com',
     userInfo: null
   }
   

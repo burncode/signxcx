@@ -40,6 +40,7 @@ export default class Drawer extends wepy.component {
 
     watch = {
         painting(newVal, oldVal) {
+            console.log('isPainting',this.isPainting)
             if (!this.isPainting) {
                 if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
                     if (newVal && newVal.width && newVal.height) {
@@ -49,6 +50,7 @@ export default class Drawer extends wepy.component {
                         this.readyPigment();
                     }
                 } else {
+                    console.log('newVal',newVal,newVal.mode)
                     if (newVal && newVal.mode !== "same") {
                         this.$emit("getImage", {
                             errMsg: "canvasdrawer:samme params"
@@ -135,7 +137,7 @@ export default class Drawer extends wepy.component {
             }
         }
         this.ctx.draw(false, () => {
-            wepy.setStorageSync("canvasdrawer_pic_cache", this.cache);
+            // wepy.setStorageSync("canvasdrawer_pic_cache", this.cache);
             this.saveImageToLocal();
         });
     }
@@ -302,8 +304,8 @@ export default class Drawer extends wepy.component {
         }
     }
     onLoad() {
-        wepy.removeStorageSync("canvasdrawer_pic_cache");
-        this.cache = wepy.getStorageSync("canvasdrawer_pic_cache") || {};
+        // wepy.removeStorageSync("canvasdrawer_pic_cache");
+        // this.cache = wepy.getStorageSync("canvasdrawer_pic_cache") || {};
         this.ctx = wepy.createCanvasContext("canvasdrawer", this);
     }
 }

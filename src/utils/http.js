@@ -6,7 +6,8 @@ export default class http {
     // 如果没有签名，先获取签名再发出请求
     if (!wepy.$instance.globalData.token) {
       const {code} = await wepy.login()
-      const {data} = await wepy.request({ url: 'http://localhost:8009/gettoken', data: { code: code } })
+      // localhost:8009
+      const {data} = await wepy.request({ url: 'https://signapi.readfollow.com/gettoken', data: { code: code } })
       wepy.$instance.globalData.token = data.token
     }
 

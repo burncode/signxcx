@@ -250,14 +250,14 @@ background-color:white;
         </view>
     </view>
     <view class="panel">
-        <view class="panel__hd">今日已签到</view>
+        <view class="panel__hd">今日打卡用户</view>
         <view class="panel__bd">
             <view class="cells">
                 <repeat for="{{users}}" key="index" index="index" item="user">
                 
                     <view class="cell">
                         <view class="cell__hd">
-                            <image src="{{user.AvatarURL}}" style="width: 90rpx;height: 90rpx;" />
+                            <image src="{{user.AvatarURL}}" style="width: 90rpx;height: 90rpx;border-radius:50%;" />
                         </view>
                         <view class="cell__bd">
                             <view>{{user.NickName}}</view>
@@ -275,13 +275,13 @@ background-color:white;
     <view class="flex fix_nav_sp">     
         <view class="navshare">
             <button class="clearBtnStyle" openType="share" >
-                <image src="../../images/wx.png" style="width:48rpx;height:48rpx;display:block;margin: 0 auto;"></image>
+                <image src="../images/wx.png" style="width:48rpx;height:48rpx;display:block;margin: 0 auto;"></image>
                     分享
             </button>
         </view>
         <view class="navposter">
             <button class="clearBtnStyle"  @tap="buildPoster()" >
-                <image src="../../images/tp.png" style="width:48rpx;height:48rpx;display:block;margin: 0 auto;"></image>
+                <image src="../images/tp.png" style="width:48rpx;height:48rpx;display:block;margin: 0 auto;"></image>
                     生成海报
             </button>
         </view>
@@ -290,8 +290,8 @@ background-color:white;
                     授权登录
             </button>
             <block wx:if="{{userInfo.nickName && signInfo.score}}" >
-                <button wx:if="{{ signInfo.status}}"  type="primary" style="width:100%;margin:5px;height:80rpx;line-height:80rpx;"  @tap="doSign()">打卡签到</button>
-                <button wx:if="{{ !signInfo.status}}"  type="primary" style="width:100%;margin:5px;height:80rpx;line-height:80rpx;"  @tap="doSign()">已签</button> 
+                <button wx:if="{{ signInfo.status}}"  type="primary" style="width:100%;margin:5px;height:80rpx;line-height:80rpx;"  @tap="doSign()">打卡自律</button>
+                <button wx:if="{{ !signInfo.status}}"  type="primary" style="width:100%;margin:5px;height:80rpx;line-height:80rpx;"  @tap="doSign()">已打卡</button> 
             </block>
         </view>
     </view>
@@ -303,11 +303,10 @@ background-color:white;
   import userApi from '../api/user'
   import commApi from '../api/comm'
   import canvasdrawer from "../components/canvasdrawer/canvasdrawer";
-  import DrawerData from "../components/canvasdrawer/drawerdata";
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'test',
+      navigationBarTitleText: '每天自律打卡',
     }
 
 
@@ -330,24 +329,35 @@ background-color:white;
         return +new Date()
       }
     }
+    event = {
+      getImage (e) {
+        //   console.log('getImage',e) 
+          wepy.showToast({
+                    title: e,
+                    icon: "success",
+                    duration: 2000
+                });
+      }
+    }
 
     methods = {
         click(){},
 
-        buildPoster() {
-            wepy.showLoading({
-                title: "绘制分享图片中",
-                mask: true
-            });
-            console.log('painting',DrawerData)
-            this.painting = DrawerData;
+        async buildPoster() {
+            if(this.shareImage == ''){
+                wepy.showLoading({
+                    title: "绘制分享图片中",
+                    mask: true
+                });
+                this.painting = await userApi.GetPosterConfig();
+            }
             this.showposter = true;
             this.$apply();
         },
         closePoster() {
             this.showposter = false;
-            this.shareImage = "";
-            this.painting = [];
+            // this.shareImage = "";
+            // this.painting = [];
             this.$apply();
         },
 
@@ -368,18 +378,23 @@ background-color:white;
         eventGetImage(event) {
             wepy.hideLoading();
             const { tempFilePath, errMsg } = event;
-            if (errMsg === "canvasdrawer:ok") this.shareImage = tempFilePath;
+            if (errMsg === "canvasdrawer:ok"){
+                this.shareImage = tempFilePath;
+            }else{
+                wepy.showToast({
+                    title: errMsg,
+                    icon: "success",
+                    duration: 2000
+                });
+            }
         },
 
         async doSign() {
-            this.users = [{NickName:this.userInfo.nickName,AvatarURL:this.userInfo.avatarUrl}, ...this.users]
             let status = await userApi.DoSign()
             if(status ==`t`){
                 this.signInfo.status = false
-
-            }else{ 
                 this.users = [{NickName:this.userInfo.nickName,AvatarURL:this.userInfo.avatarUrl}, ...this.users]
-            }        
+            }       
             this.$apply()
         },
         async bindGetUserInfo(e) {
@@ -389,155 +404,13 @@ background-color:white;
         }
     }
     
+
     async onLoad() {
-
-         wepy.showLoading({
-                title: "绘制分享图片中",
-                mask: true
-            });
-            console.log('painting',DrawerData)
-            // this.painting = DrawerData;
-            this.painting = {
-  'width': 375,
-  'height': 360,
-  'clear': true,
-  'views': [
-    {
-      'type': 'image',
-      'url': 'http://localhost:8009/bg.jpg',
-      'top': 0,
-      'left': 0,
-      'width': 375,
-      'height': 360
-    },
-    {
-      'type': 'image',
-      'url': 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83epJEPdPqQVgv6D8bojGT4DrGXuEC4Oe0GXs5sMsN4GGpCegTUsBgL9SPJkN9UqC1s0iakjQpwd4h4A/132',
-      'top': 127.5,
-      'left': 29,
-      'width': 55,
-      'height': 55
-    },
-    {
-      'type': 'image',
-      'url': 'https://hybrid.xiaoying.tv/miniprogram/viva-ad/1/1531401349117.jpeg',
-      'top': 127.5,
-      'left': 29,
-      'width': 55,
-      'height': 55
-    }, 
-    {
-      'type': 'text',
-      'content': '一月',
-      'fontSize': 14,
-      'color': '#402D16',
-      'textAlign': 'left',
-      'top': 0,
-      'left': 320,
-      'bolder': false
-    },
-    {
-      'type': 'text',
-      'content': '24',
-      'fontSize': 22,
-      'color': '#402D16',
-      'textAlign': 'left',
-      'top': 18,
-      'left': 320,
-      'bolder': true
-    },
-    {
-      'type': 'text',
-      'content': '07:08',
-      'fontSize': 26,
-      'color': '#402D16',
-      'textAlign': 'left',
-      'top': 128,
-      'left': 96,
-      'bolder': true
-    },
-    {
-      'type': 'text',
-      'content': '坚持自律',
-      'fontSize': 16,
-      'color': '#402D16',
-      'textAlign': 'left',
-      'top': 138,
-      'left': 176,
-      'bolder': false
-    },
-    {
-      'type': 'text',
-      'content': '13',
-      'fontSize': 26,
-      'color': 'red',
-      'textAlign': 'center',
-      'top': 128,
-      'left': 270,
-      'bolder': true
-    },
-    {
-      'type': 'text',
-      'content': '天',
-      'fontSize': 16,
-      'color': '#402D16',
-      'textAlign': 'left',
-      'top': 138,
-      'left': 302,
-      'bolder': false
-    },
-    {
-      'type': 'text',
-      'content': '541234人正在参与',
-      'fontSize': 14,
-      'color': '#383549',
-      'textAlign': 'left',
-      'top': 168,
-      'left': 96,
-      'bolder': false
-    },
-   
-    {
-      'type': 'image',
-      'url': 'https://hybrid.xiaoying.tv/miniprogram/viva-ad/1/1531385433625.jpeg',
-      'top': 250,
-      'left': 265,
-      'width': 68,
-      'height': 68
-    },
-    {
-      'type': 'text',
-      'content': '扫码一起改变',
-      'fontSize': 14,
-      'color': '#383549',
-      'textAlign': 'left',
-      'top': 320,
-      'left': 255,
-      'bolder': false
-     },
-    // {
-    //   'type': 'text',
-    //   'content': '扫码与我一起改变',
-    //   'fontSize': 14,
-    //   'color': '#383549',
-    //   'textAlign': 'left',
-    //   'top': 320,
-    //   'left': 165.5,
-    //   'lineHeight': 20,
-    //   'MaxLineNumber': 2,
-    //   'breakWord': true,
-    //   'width': 96
-    // }
-  ]
-}
-;
-            this.showposter = true;
-            this.$apply();
-
         this.users = await commApi.GetTodaySignUsers()
         this.userInfo = await userApi.getUserInfo()
         this.signInfo = await userApi.GetTodaySignInfo()
         this.$apply()
     }
   }
+
 </script>

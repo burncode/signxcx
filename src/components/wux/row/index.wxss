@@ -1,8 +1,0 @@
-.wux-row:before,
-.wux-row:after {
-  display: table;
-  content: " ";
-}
-.wux-row:after {
-  clear: both;
-}

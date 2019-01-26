@@ -27,6 +27,12 @@ export default class user extends base {
    /**
    * 同步用户数据到服务器上
    */
+  static async GetPosterConfig(theme) {
+    return this.get(`${this.baseUrl}/api/getposter`, {theme: theme})
+  }
+   /**
+   * 同步用户数据到服务器上
+   */
   static async CryptUserInfo(user) {
     return this.post(`${this.baseUrl}/api/crypt`, {ed: user.encryptedData, iv: user.iv})
   }
