@@ -1,6 +1,5 @@
 /* eslint-disable padded-blocks */
 import base from './base'
-import wepy from 'wepy'
 
 /**
  * 权限服务类
@@ -12,9 +11,10 @@ export default class comm extends base {
     return await this.get(url)
   }
 
-  static async GetTodaySignUsers() {
+  // 获取今天签到用户
+  static async GetTodaySignUsers(page) {
     const url = `${this.baseUrl}/gettodaysignusers`
-    return await this.get(url)
+    return await this.get(url, {page: page})
   }
 
   static async GetAppConfig() {
