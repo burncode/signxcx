@@ -17,4 +17,8 @@ export default class comm extends base {
     return await this.get(url)
   }
 
+  static async GetAppConfig() {
+    const url = `${this.baseUrl}/api/getappconfig`
+    return await this.get(url)
+  }
 }

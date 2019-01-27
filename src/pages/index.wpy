@@ -316,6 +316,7 @@ background-color:white;
 
 
     data = {
+        config:[],
         userInfo:[],
         signInfo:[],
         shareImage: "",
@@ -407,10 +408,45 @@ background-color:white;
 
     async onLoad() {
         this.users = await commApi.GetTodaySignUsers()
+        this.config = await commApi.GetAppConfig() // 一些简单的参数配置
         this.userInfo = await userApi.getUserInfo()
         this.signInfo = await userApi.GetTodaySignInfo()
         this.$apply()
     }
+
+
+    onShareAppMessage(res) {
+        return {
+            title: this.config.sharetitle,
+            path: this.config.sharepath,
+            imageUrl: this.config.shareimageUrl,
+            success: function(res) {
+                // 转发成功
+                console.log(res)
+            },
+            fail: function(res) {
+                console.log(res)
+                // 转发失败
+            }
+        }
+    }
+    
+    onReachBottom(){
+        this.state = 1;
+        if (this.next) {
+            var that = this
+            this.fetch(this.next.url, this.drive);
+            that.next = [];
+        }
+        console.log('到底了')
+    }
+        
+        // 下拉刷新
+        onPullDownRefresh() {
+            this.chapters = []
+            this.fetch(this.url,this.drive)
+            wx.stopPullDownRefresh()
+        }
   }
 
 </script>
