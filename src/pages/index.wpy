@@ -106,9 +106,9 @@
 
 .share-image {
     display: block;
-    width: 630rpx;
-    height: 540rpx;
-    margin: 40rpx auto;
+    width: 600rpx;
+    height: 600rpx;
+    margin: 60rpx auto;
     // border: 1px solid black;
 }
 
@@ -118,8 +118,8 @@ button {
 
 .posterbox{
     width: 600rpx;
-    height: 888rpx;
-    margin:  0 auto;
+    height: 600rpx;
+    margin:  5rem auto;
     z-index: 99;
 }
 .saveBtn{
