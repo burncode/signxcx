@@ -405,14 +405,20 @@ background-color:white;
             this.$apply()
         }
     }
-    
 
-    async onLoad() {
-        this.users = await commApi.GetTodaySignUsers(this.page)
-        this.userInfo = await userApi.getUserInfo()
-        this.signInfo = await userApi.GetTodaySignInfo()
-        this.config = await commApi.GetAppConfig() // 一些简单的参数配置
-        this.$apply()
+    async onLoad(query) {
+        // scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
+        if( query.scene  ){
+            // 跳转到用户详情页
+            wepy.navigateTo({url:"/pages/info?id="+decodeURIComponent(query.scene)});
+
+        }else{
+            this.users = await commApi.GetTodaySignUsers(this.page)
+            this.userInfo = await userApi.getUserInfo()
+            this.signInfo = await userApi.GetTodaySignInfo()
+            this.config = await commApi.GetAppConfig() // 一些简单的参数配置
+            this.$apply()
+        }
     }
 
 

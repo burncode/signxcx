@@ -92,11 +92,11 @@
 
     <view class="head">
         <view class="hd">
-             <image src="{{userInfo.avatarUrl}}" style="width:128rpx;height:128rpx;border-radius:50%;"></image>
+             <image src="{{userInfo.AvatarURL}}" style="width:128rpx;height:128rpx;border-radius:50%;"></image>
         </view>
         <view class="bd">
             <view class="title"> {{userInfo.nickName}} </view>
-            <view class="desc"> 已签到：20天  律值：12346  </view>
+            <view class="desc"> 已签到： {{userInfo.AllToT}}天  律值：{{userInfo.AllRank}}  </view>
         </view>
     </view>
 
@@ -104,41 +104,19 @@
         <view class="panel__hd">关注过Ta的</view>
         <view class="panel__bd">
             <view class="cells">
-                <view class="cell">
-                    <view class="cell__hd">
-                        <image src="{{userInfo.avatarUrl}}" style="width: 90rpx;height: 90rpx;" />
+                
+                <repeat for="{{users}}" key="index" index="index" item="user">
+                
+                    <view class="cell">
+                        <view class="cell__hd">
+                            <image src="{{user.AvatarURL}}" style="width: 90rpx;height: 90rpx;border-radius:50%;" />
+                        </view>
+                        <view class="cell__bd">
+                            <view>{{user.NickName}}</view>
+                        </view>
                     </view>
-                    <view class="cell__bd">
-                        <view>小易同学</view>
-                    </view>
-                </view>
 
-                <view class="cell">
-                    <view class="cell__hd">
-                        <image src="{{userInfo.avatarUrl}}" style="width: 90rpx;height: 90rpx;" />
-                    </view>
-                    <view class="cell__bd">
-                        <view>小易同学</view>
-                    </view>
-                </view>
-
-                <view class="cell">
-                    <view class="cell__hd">
-                        <image src="{{userInfo.avatarUrl}}" style="width: 90rpx;height: 90rpx;" />
-                    </view>
-                    <view class="cell__bd">
-                        <view>小易同学</view>
-                    </view>
-                </view>
-
-                <view class="cell">
-                    <view class="cell__hd">
-                        <image src="{{userInfo.avatarUrl}}" style="width: 90rpx;height: 90rpx;" />
-                    </view>
-                    <view class="cell__bd">
-                        <view>小易同学</view>
-                    </view>
-                </view>
+                </repeat>
 
             </view>
         </view>
@@ -159,6 +137,7 @@
 
 
     data = {
+        users:[],
         userInfo:[],
         signInfo:[]
     }
@@ -186,13 +165,9 @@
         }
     }
     async onLoad({id}) {
-        let userInfo = await userApi.getUser(id)
-        console.log('user',userInfo)
-    }
-    async onShow() {
-        this.userInfo = await userApi.getUserInfo()
+        this.userInfo = await userApi.getUser(id)
+        this.users = await userApi.getUserFollow(id)
         this.signInfo = await userApi.GetTodaySignInfo()
-        console.log('userInfo', this.userInfo,this.signInfo, this.signInfo.score)
         this.$apply()
     }
   }

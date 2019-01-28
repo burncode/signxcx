@@ -80,4 +80,9 @@ export default class user extends base {
     return await this.get(url)
   }
 
+  static async getUserFollow(id) {
+    const url = `${this.baseUrl}/api/user/${id}/follow`
+    return await this.get(url)
+  }
+
 }

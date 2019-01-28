@@ -59,15 +59,13 @@
             this.$apply()
         }
     }
-    async onLoad() {
-        // let userInfo = await userApi.getUserInfo()
-        // console.log('userInfo',userInfo)
-    }
-    async onShow() {
-        this.userInfo = await userApi.getUserInfo()
+    async onLoad({id}) {
+        this.userInfo = await userApi.getUser(id)
         this.signInfo = await userApi.GetTodaySignInfo()
         console.log('userInfo', this.userInfo,this.signInfo, this.signInfo.score)
         this.$apply()
+    }
+    async onShow() {
     }
   }
 </script>
