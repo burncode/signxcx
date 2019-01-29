@@ -85,6 +85,9 @@
 
             this.checkboxItems = checkboxItems;
         },
+        doSign(){
+            // 
+        },
     }
     async onLoad() {
         this.signConfig = await commApi.GetSignConfig()
