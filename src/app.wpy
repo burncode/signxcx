@@ -1,12 +1,5 @@
 <style lang="less">
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
+@import './style/weui.less';
 </style>
 
 <script>
@@ -18,6 +11,7 @@ export default class extends wepy.app {
     pages: [
       'pages/index',
       'pages/jump',
+      'pages/sign',
       'pages/canvas',
       'pages/index1',
       'pages/index2',
@@ -55,16 +49,21 @@ export default class extends wepy.app {
 
   globalData = {
     token: '',
-    baseUrl: 'http://localhost:8009',
-    // baseUrl: 'https://signapi.readfollow.com',
+    //baseUrl: 'http://localhost:8009',
+    baseUrl: 'https://signapi.readfollow.com',
     userInfo: null
   }
   
   async onLaunch (p) {
-    // const {code} = await wepy.login()
-    // const {data} = await wepy.request({ url: 'http://localhost:8009/gettoken', data: { code: code } })
-    // wepy.$instance.globalData.token = data.token
-    // console.log('onLaunch token', wepy.$instance.globalData.token)
+    try {
+      const value = wepy.getStorageSync('token');
+      if (value !== '') {
+        console.info(`[auth]token sync success `);
+        wepy.$instance.globalData.token = value;
+      }
+    } catch (e) {
+      console.warn(`[auth]token sync fail `);
+    }
   }
 }
 </script>

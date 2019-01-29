@@ -21,4 +21,10 @@ export default class comm extends base {
     const url = `${this.baseUrl}/api/getappconfig`
     return await this.get(url)
   }
+
+  // 获得签到配置
+  static async GetSignConfig() {
+    const url = `${this.baseUrl}/api/getsignconfig`
+    return await this.get(url)
+  }
 }
