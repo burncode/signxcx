@@ -7,7 +7,7 @@ export default class http {
     if (!wepy.$instance.globalData.token) {
       const {code} = await wepy.login()
       // localhost:8009
-      const {data} = await wepy.request({ url: 'https://signapi.readfollow.com/gettoken', data: { code: code } })
+      const {data} = await wepy.request({ url: wepy.$instance.globalData.baseUrl + '/gettoken', data: { code: code } })
       wepy.$instance.globalData.token = data.token
       wepy.setStorageSync('token', data.token)
     }

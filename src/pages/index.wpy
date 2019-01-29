@@ -330,8 +330,8 @@ background-color:white;
                     授权登录
             </button>
             <block wx:if="{{userInfo.nickName && signInfo.score}}" >
-                <button wx:if="{{ signInfo.status}}"  type="primary" style="width:100%;margin:5px;height:80rpx;line-height:80rpx;"  @tap="doSign()">打卡</button>
-                <button wx:if="{{ !signInfo.status}}"  type="primary" style="width:100%;margin:5px;height:80rpx;line-height:80rpx;"  @tap="showSign()">已打卡</button> 
+                <button wx:if="{{ signInfo.status}}"  type="primary" style="width:100%;margin:5px;height:80rpx;line-height:80rpx;"  @tap="showSign()">打卡</button>
+                <button wx:if="{{ !signInfo.status}}"  type="default" style="width:100%;margin:5px;height:80rpx;line-height:80rpx;"  @tap="doSign()">已打卡</button> 
             </block>
         </view>
     </view>
@@ -365,7 +365,7 @@ background-color:white;
         users: [],
         page:1,
         show_sign_status:0,
-        checkboxValue:["1","2"],
+        checkboxValue:[],
         checkboxItems: [],
     }
 
@@ -458,41 +458,28 @@ background-color:white;
         },
 
         async doSign() {
-            console.log('checkboxValue',this.checkboxValue)
-            let status = await userApi.DoSign()
+            let status = await userApi.DoSign(this.checkboxValue.join(','))
             if(status ==`t`){
                 this.signInfo.status = false
                 this.users = [{NickName:this.userInfo.nickName,AvatarURL:this.userInfo.avatarUrl}, ...this.users]
-            }       
+            }
+            this.show_sign_status = 0;
             this.$apply()
         },
 
         async showSign() {
             // 如果打卡项未初始化
             if(!this.checkboxItems.length){
-                // todo 从服务器上获取打卡分析项和默认选中项
-                this.checkboxItems = [
-                    {name: '早睡早起', value: '1', checked: true, intro:"1弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内"},
-                    {name: '运动健身', value: '2', checked: false, intro:"2弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内"},
-                    {name: '学新知识', value: '3', checked: false, intro:"3弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内"},
-                    {name: '远离手机', value: '4', checked: false, intro:"4弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内"},
-                    {name: '情绪控制', value: '5', checked: true, intro:"5弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内"},
-                    {name: '高效执行', value: '6', checked: false, intro:"6弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内"}
-                ]
-                
-                // 
-                var checkboxItems = this.checkboxItems, values = this.checkboxValue;
+                // 从服务器上获取打卡分析项
+                this.checkboxItems = await  commApi.GetSignConfig()
+                var checkboxItems = this.checkboxItems, values = [] ;
                 for (var i = 0, lenI =  checkboxItems.length; i < lenI; ++i) {
-                    checkboxItems[i].checked = false;
-
-                    for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
-                        if (checkboxItems[i].value === values[j]) {
-                            checkboxItems[i].checked = true;
-                            break;
-                        }
+                    // 设置默认选中项
+                    if(checkboxItems[i].checked == true){
+                        values = [...values, checkboxItems[i].value]
                     }
                 }
-
+                this.checkboxValue = values
             }
             this.show_sign_status = 1;
             this.$apply()

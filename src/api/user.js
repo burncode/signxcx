@@ -40,8 +40,8 @@ export default class user extends base {
    /**
    * 签到
    */
-  static async DoSign() {
-    return this.get(`${this.baseUrl}/api/dosign`)
+  static async DoSign(ids) {
+    return this.get(`${this.baseUrl}/api/dosign?ids=${ids}`)
   }
 
   /**
