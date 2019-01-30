@@ -10,6 +10,7 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',
+      'pages/tips',
       'pages/jump',
       'pages/sign',
       'pages/canvas',
