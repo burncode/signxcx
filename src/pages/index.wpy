@@ -254,87 +254,17 @@ background-color:white;
 
 
 
-.tooltip {
-    position: absolute;
-    z-index: 1070;
-    display: block;
-    margin: 0;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.5;
-    text-align: left;
-    text-align: start;
-    text-decoration: none;
-    text-shadow: none;
-    text-transform: none;
-    letter-spacing: normal;
-    word-break: normal;
-    word-spacing: normal;
-    white-space: normal;
-    line-break: auto;
-    font-size: .875rem;
-    word-wrap: break-word;
-    opacity: 1;
-}
-.tooltip-inner {
-    max-width: 200px;
-    padding: .25rem .5rem;
-    color: #fff;
-    text-align: center;
-    background-color: #000;
-    border-radius: .25rem;
-}
-
-.bs-tooltip-bottom .arrow {
-    top: 0;
-}
-
-.bs-tooltip-top .arrow {
-    bottom: 0;
-}
-.tooltip .arrow {
-    position: absolute;
-    display: block;
-    width: .8rem;
-    height: .4rem;
-}
-.tooltip .arrow::before {
-    position: absolute;
-    content: "";
-    border-color: transparent;
-    border-style: solid;
-}
-.bs-tooltip-bottom .arrow::before {
-    bottom: 0;
-    border-width: 0 .4rem .4rem;
-    border-bottom-color: #000;
-}
-.bs-tooltip-top .arrow::before {
-    top: 0;
-    border-width: .4rem .4rem 0;
-    border-top-color: #000;
-}
-.bs-tooltip-top {
-    padding: .4rem 0;
-}
-.bs-tooltip-bottom {
-    padding: .4rem 0;
-}
 </style>
 <template>
 <view class="page" >
 
 
-    <view class="tooltip fade bs-tooltip-bottom show" role="tooltip" id="tooltip951720" style="will-change: transform; position: absolute; top: 0px; right: 5%;" x-placement="bottom">
-        <view class="arrow" style="right: 48px;"></view>
-        <view class="tooltip-inner">添加到我的小程序</view>
-    </view>
-
-    <view class="tooltip fade bs-tooltip-top show" role="tooltip" id="tooltip951720" style="will-change: transform; position: absolute; bottom: 120rpx; left: 15%;" x-placement="bottom">
-        <view class="arrow" style="left: 52px;"></view>
-        <view class="tooltip-inner">东日温暖 DC.林华贤</view>
-    </view>
+    <tooltip
+     :tooltipshow.sync="tooltipshow" 
+     :content.sync="tooltipcontent"
+      :arrowstyle.sync="tooltiparrowstyle"
+        :tooltipclass.sync="tooltipclass" 
+        :tooltipstyle.sync="tooltipstyle" />
 
     <view wx:if="{{showposter}}" class="closeMask" @tap="closePoster">
         <view class="posterbox"  catchtap="click">
@@ -358,7 +288,7 @@ background-color:white;
                             <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
                         </view>
                         <view class="weui-cell__bd">{{item.name}}</view>
-                        <view class="weui-cell__ft " catchtap="tips('{{item.intro}}')"> ? </view>
+                        <view wx:if="{{item.intro}}" class="weui-cell__ft " catchtap="tips('{{item.intro}}')"> ? </view>
                     </label>
                 </checkbox-group>
             </view>
@@ -412,7 +342,7 @@ background-color:white;
             </button>
             <block wx:if="{{userInfo.nickName && signInfo.score}}" >
                 <button wx:if="{{ signInfo.status}}"  type="primary" style="width:100%;margin:5px;height:80rpx;line-height:80rpx;"  @tap="showSign()">打卡</button>
-                <button wx:if="{{ !signInfo.status}}"  type="default" style="width:100%;margin:5px;height:80rpx;line-height:80rpx;"  @tap="doSign()">已打卡</button> 
+                <button wx:if="{{ !signInfo.status}}"  type="default" style="width:100%;margin:5px;height:80rpx;line-height:80rpx;"  @tap="showSign()">已打卡</button> 
             </block>
         </view>
     </view>
@@ -424,6 +354,7 @@ background-color:white;
   import userApi from '../api/user'
   import commApi from '../api/comm'
   import canvasdrawer from "../components/canvasdrawer/canvasdrawer";
+  import tooltip from "../components/tooltip";
 
   export default class Index extends wepy.page {
     config = {
@@ -432,7 +363,8 @@ background-color:white;
 
 
     components = {
-        canvasdrawer
+        canvasdrawer,
+        tooltip
     };
 
 
@@ -448,6 +380,12 @@ background-color:white;
         show_sign_status:0,
         checkboxValue:[],
         checkboxItems: [],
+        // tooltip
+        tooltipshow:false,
+        tooltipcontent:"",
+        tooltiparrowstyle:"",
+        tooltipclass:"",
+        tooltipstyle:"",
     }
 
     computed = {
@@ -543,6 +481,12 @@ background-color:white;
             if(status ==`t`){
                 this.signInfo.status = false
                 this.users = [{NickName:this.userInfo.nickName,AvatarURL:this.userInfo.avatarUrl}, ...this.users]
+                
+                wepy.showToast({
+                    title: "打卡成功",
+                    // icon: "none",
+                    duration: 1000
+                });
             }
             this.show_sign_status = 0;
             this.$apply()
@@ -589,6 +533,15 @@ background-color:white;
             this.userInfo = await userApi.getUserInfo()
             this.signInfo = await userApi.GetTodaySignInfo()
             this.config = await commApi.GetAppConfig() // 一些简单的参数配置
+            if(this.config.tooltipcontent){
+                this.tooltipshow = true
+                this.tooltipcontent = this.config.tooltipcontent
+                this.tooltiparrowstyle = this.config.tooltiparrowstyle
+                this.tooltipclass = this.config.tooltipclass
+                this.tooltipstyle = this.config.tooltipstyle
+            }
+            this.$apply()
+            this.tooltipshow = false
             this.$apply()
         }
     }
