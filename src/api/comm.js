@@ -12,6 +12,12 @@ export default class comm extends base {
   }
 
   // 获取今天签到用户
+  static async GetAllProject() {
+    const url = `${this.baseUrl}/project`
+    return await this.get(url)
+  }
+
+  // 获取今天签到用户
   static async GetTodaySignUsers(page) {
     const url = `${this.baseUrl}/gettodaysignusers`
     return await this.get(url, {page: page})
