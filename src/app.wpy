@@ -143,6 +143,33 @@ export default class extends wepy.app {
     pages: [
       'pages/project/index',
       'pages/index/index',
+      'pages/home/home',
+      
+      // 'pages/topic/home',
+      // 'pages/topic/experience',
+      // 'pages/topic/sign',
+      
+      // 'pages/article/home',
+      // 'pages/article/category',
+      // 'pages/article/info',
+
+      // 'pages/user/home',
+      // 'pages/user/signlog',
+      // 'pages/user/beliked',
+      // 'pages/user/liked',
+      // 'pages/user/comments',
+      // 'pages/user/collections',
+      // 'pages/user/experiences',
+
+      
+      // 'pages/my/home',
+      // 'pages/my/signlog',
+      // 'pages/my/beliked',
+      // 'pages/my/liked',
+      // 'pages/my/comments',
+      // 'pages/my/collections',
+      // 'pages/my/experiences',
+
       'pages/index',
       'pages/tips',
       'pages/jump',
