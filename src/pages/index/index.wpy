@@ -13,18 +13,18 @@ page{
 
 <image src='/images/BasicsBg.png' mode='widthFix' class='png' style='width:100%;height:486rpx'></image>
 
-<view class="bg-img bg-mask margin-top" style="background-image: url('https://albedo-theme.com/wp-content/uploads/2016/08/pexels-photo-26180.jpg')">
+<view @tap="goto({{item}})"  wx:for="{{projects}}" wx:key class="bg-img bg-mask margin-top" style="background-image: url('{{item.background}}')">
   <view class='padding-xl text-white'>
     <view class='padding-xs text-xl'>
-      早起挑战
+      {{item.name}}
     </view>
     <view class='padding-xs'>
-      累计32100人次挑战成功
+      {{item.intro}}
     </view>
   </view>
 </view>
 
-
+<!-- 
 <view class="bg-img bg-mask margin-top" style="background-image: url('https://albedo-theme.com/wp-content/uploads/2016/08/pexels-photo-26180.jpg')">
   <view class='padding-xl'>
     <view class='padding-xs text-xl  text-white'>
@@ -101,7 +101,7 @@ page{
       I Have a Date with Spring
     </view>
   </view>
-</view>
+</view> -->
 
 </view>
 </template>
@@ -122,17 +122,7 @@ page{
     data = {
       StatusBar:0,
       CustomBar:0,
-      list: [{
-          title: '索引列表',
-          img: 'https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg',
-          url: '../indexes/indexes'
-        },
-        {
-          title: '微动画',
-          img: 'https://image.weilanwl.com/color2.0/plugin/wdh2236.jpg',
-          url: '../animation/animation'
-        }
-      ]
+      projects: []
     }
 
     computed = {
@@ -152,27 +142,28 @@ page{
     }
 
     methods = {
-        tips(intro){
-            wepy.showModal({
-                content: intro,
-                showCancel: false
-            });
-        },
-       
-      isCard(e) {
-          this.isCard = e.detail.value
-        },
-        click(){},
-
+      goto(item){
+          wepy.navigateTo({url:item.wxto});
+      }
     }
 
     async onLoad(query) {
-      
+
         this.StatusBar= wepy.$instance.globalData.StatusBar
         this.CustomBar= wepy.$instance.globalData.CustomBar
         this.projects = await commApi.GetAllProject()
         this.$apply()
-        console.log(wepy.$instance.globalData)
+      // let that = this;
+      // // 获取用户信息
+      // wx.getSetting({
+      //   success: res => {
+      //     if (!res.authSetting['scope.userInfo']) {
+      //       wx.redirectTo({
+      //         url: '/pages/auth/auth'
+      //       })
+      //     }
+      //   }
+      // })
     }
 
 
